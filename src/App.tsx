@@ -1,7 +1,12 @@
 import React from 'react';
+import Editor from './Editor';
 
 function App() {
-  return <div>empty page</div>;
+  return (
+    <>
+      <Editor />
+    </>
+  );
 }
 
 export default App;
