@@ -1,27 +1,54 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import ContentEditable from 'react-contenteditable';
-import sanitizeHtml from 'sanitize-html';
+import snarkdown from 'snarkdown';
+import * as HtmlToMd from 'html-to-markdown';
 
 import styles from './Editor.module.css';
 
-function Editor() {
-  const [html, setHtml] = useState('hello <b>world</b>');
+function Editor({
+  editableOnLoad = true,
+  initialState = '*hello* **flyntlok**',
+  isPlainText = false,
+  //onSend,
+}) {
+  const [html, setHtml] = useState(snarkdown(initialState));
+  const [editable, setEditable] = useState(editableOnLoad);
 
   function handleChange(e: any) {
-    const newHtml = e.target.value;
+    const newHtml = snarkdown(e.target.value);
     setHtml(newHtml);
+  }
+
+  function getMarkdown(submittedHtml: string): void {
+    const newMarkdown = HtmlToMd.convert(submittedHtml);
+    alert(newMarkdown);
+    //onSend(newMarkdown);
   }
 
   return (
     <div>
+      <div>initial markdown: {initialState}</div>
+      <hr />
+      <div>
+        HTML state: <br />
+        {html}
+      </div>
+      <hr />
       editor component:
       <ContentEditable
-        className={styles.editable}
+        tagName='div'
+        className={editable ? styles.editable : styles.editableOff}
         html={html}
-        disabled={false}
+        disabled={!editable}
         onChange={handleChange}
       />
+      <div className={styles.editableOff}>{html}</div>
+      <div>actions</div>
+      <button onClick={() => setEditable((curr) => !curr)}>
+        editor {editable ? 'ON' : 'OFF'}
+      </button>
+      <button>bold</button>
+      <button onClick={() => getMarkdown(html)}>submit markdown</button>
     </div>
   );
 }

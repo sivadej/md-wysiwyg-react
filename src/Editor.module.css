@@ -1,0 +1,14 @@
+.editable {
+  padding: 20px;
+  margin: 20px;
+  background-color: rgb(202, 202, 202);
+  border: 2px solid rgb(0, 0, 128);
+  border-radius: 5px;
+}
+
+.editableOff {
+  padding: 20px;
+  margin: 20px;
+  background-color: rgb(202, 202, 202);
+  border-radius: 5px;
+}
