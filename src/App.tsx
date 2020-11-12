@@ -2,11 +2,10 @@ import React from 'react';
 import Editor from './Editor';
 
 function App() {
-  return (
-    <>
-      <Editor />
-    </>
-  );
+  const handleSend = (md: string): void => {
+    console.log(`Received markdown: "${md}"`);
+  };
+  return <Editor onSend={handleSend} />;
 }
 
 export default App;

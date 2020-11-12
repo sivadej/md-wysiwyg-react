@@ -12,3 +12,11 @@
   background-color: rgb(202, 202, 202);
   border-radius: 5px;
 }
+
+.htmlPreview {
+  padding: 20px;
+  margin: 20px;
+  color: white;
+  background-color: black;
+  border-radius: 0px;
+}

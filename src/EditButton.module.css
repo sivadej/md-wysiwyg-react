@@ -1,0 +1,21 @@
+.btn {
+  border-radius: 5px;
+  background-color: rgb(175, 175, 175);
+  border: none;
+  padding: 0.3em;
+  margin: 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 2em;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: rgb(121, 121, 121);
+}
+
+.btn:active {
+  background-color: white;
+}

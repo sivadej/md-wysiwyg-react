@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import snarkdown from 'snarkdown';
 import * as HtmlToMd from 'html-to-markdown';
-
+import EditButton from './EditButton';
 import styles from './Editor.module.css';
 
-function Editor({
-  editableOnLoad = true,
-  initialState = '*hello* **flyntlok**',
-  isPlainText = false,
-  //onSend,
-}) {
+interface EditorProps {
+  editableOnLoad?: boolean;
+  initialState?: string;
+  isPlainText?: boolean;
+  onSend: (md: string) => void;
+}
+
+function Editor(props: EditorProps): JSX.Element {
+  const {
+    editableOnLoad = true,
+    initialState = '**hello** there, *flyntlok*',
+    // isPlainText = false,
+    onSend,
+  } = props;
   const [html, setHtml] = useState(snarkdown(initialState));
   const [editable, setEditable] = useState(editableOnLoad);
 
@@ -21,20 +29,14 @@ function Editor({
 
   function getMarkdown(submittedHtml: string): void {
     const newMarkdown = HtmlToMd.convert(submittedHtml);
-    alert(newMarkdown);
-    //onSend(newMarkdown);
+    onSend(newMarkdown);
   }
 
   return (
     <div>
-      <div>initial markdown: {initialState}</div>
+      <div>Initial markdown prop: {initialState}</div>
       <hr />
-      <div>
-        HTML state: <br />
-        {html}
-      </div>
-      <hr />
-      editor component:
+      Editable Component:
       <ContentEditable
         tagName='div'
         className={editable ? styles.editable : styles.editableOff}
@@ -42,13 +44,17 @@ function Editor({
         disabled={!editable}
         onChange={handleChange}
       />
-      <div className={styles.editableOff}>{html}</div>
+      HTML State:
+      <pre className={styles.htmlPreview}>{html}</pre>
       <div>actions</div>
+      <EditButton cmd='bold' name='B' />
+      <EditButton cmd='italic' name='i' />
+      <hr />
+      <button onClick={() => getMarkdown(html)}>submit changes</button>
+      <br />
       <button onClick={() => setEditable((curr) => !curr)}>
         editor {editable ? 'ON' : 'OFF'}
       </button>
-      <button>bold</button>
-      <button onClick={() => getMarkdown(html)}>submit markdown</button>
     </div>
   );
 }
