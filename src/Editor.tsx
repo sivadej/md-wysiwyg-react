@@ -7,7 +7,7 @@ import styles from './Editor.module.css';
 
 interface EditorProps {
   editableOnLoad?: boolean;
-  initialState?: string;
+  text?: string;
   isPlainText?: boolean;
   onSend: (md: string) => void;
 }
@@ -15,11 +15,11 @@ interface EditorProps {
 function Editor(props: EditorProps): JSX.Element {
   const {
     editableOnLoad = true,
-    initialState = '**hello** there, *flyntlok*',
+    text = '',
     // isPlainText = false,
     onSend,
   } = props;
-  const [html, setHtml] = useState(snarkdown(initialState));
+  const [html, setHtml] = useState(snarkdown(text));
   const [editable, setEditable] = useState(editableOnLoad);
 
   function handleChange(e: any) {
@@ -34,7 +34,7 @@ function Editor(props: EditorProps): JSX.Element {
 
   return (
     <div>
-      <div>Initial markdown prop: {initialState}</div>
+      <div>markdown state from parent: {text}</div>
       <hr />
       Editable Component:
       <ContentEditable
